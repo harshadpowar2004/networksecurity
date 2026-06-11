@@ -23,8 +23,8 @@ from sklearn.ensemble import(
 )
 import mlflow
 
-import dagshub
-dagshub.init(repo_owner='harvig429', repo_name='networksecurity', mlflow=True)
+# import dagshub
+# dagshub.init(repo_owner='harvig429', repo_name='networksecurity', mlflow=True)
 
 class ModelTrainer:
     def __init__(self,model_trainer_config:ModelTrainerConfig,data_transformation_artifact:DataTransformationArtifact):
@@ -35,6 +35,14 @@ class ModelTrainer:
             raise NetworkSecurityException(e,sys)
     
     def track_mlflow(self,best_model,classificationmetric):
+
+        import dagshub
+
+        dagshub.init(
+            repo_owner='harvig429',
+            repo_name='networksecurity',
+            mlflow=True
+        )
         with mlflow.start_run():
             f1_score=classificationmetric.f1_score
             precision_score=classificationmetric.precision_score
